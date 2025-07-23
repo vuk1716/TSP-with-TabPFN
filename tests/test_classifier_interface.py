@@ -23,12 +23,19 @@ from torch import nn
 from tabpfn import TabPFNClassifier
 from tabpfn.base import ClassifierModelSpecs, initialize_tabpfn_model
 from tabpfn.preprocessing import PreprocessorConfig
+from tabpfn.utils import infer_device_and_type
 
 from .utils import check_cpu_float16_support
 
+exclude_devices = {
+    d.strip() for d in os.getenv("TABPFN_EXCLUDE_DEVICES", "").split(",") if d.strip()
+}
+
 devices = ["cpu"]
-if torch.cuda.is_available():
+if torch.cuda.is_available() and "cuda" not in exclude_devices:
     devices.append("cuda")
+if torch.backends.mps.is_available() and "mps" not in exclude_devices:
+    devices.append("mps")
 
 is_cpu_float16_supported = check_cpu_float16_support()
 
@@ -88,7 +95,7 @@ def X_y() -> tuple[np.ndarray, np.ndarray]:
 )
 def test_fit(
     n_estimators: int,
-    device: Literal["cuda", "cpu"],
+    device: Literal["cuda", "mps", "cpu"],
     feature_shift_decoder: Literal["shuffle", "rotate"],
     multiclass_decoder: Literal["shuffle", "rotate"],
     fit_mode: Literal["low_memory", "fit_preprocessors", "fit_with_cache"],
@@ -106,6 +113,8 @@ def test_fit(
         and not is_cpu_float16_supported
     ):
         pytest.skip("CPU float16 matmul not supported in this PyTorch version.")
+    if device == "mps" and inference_precision == torch.float64:
+        pytest.skip("MPS does not support float64, which is required for this check.")
 
     model = TabPFNClassifier(
         n_estimators=n_estimators,
@@ -336,6 +345,10 @@ def test_sklearn_compatible_estimator(
     estimator: TabPFNClassifier,
     check: Callable[[TabPFNClassifier], None],
 ) -> None:
+    _auto_device = infer_device_and_type(device="auto")
+    if _auto_device.type == "mps":
+        pytest.skip("MPS does not support float64, which is required for this check.")
+
     if check.func.__name__ in (  # type: ignore
         "check_methods_subset_invariance",
         "check_methods_sample_order_invariance",
