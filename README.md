@@ -9,22 +9,15 @@
 
 <img src="https://github.com/PriorLabs/tabpfn-extensions/blob/main/tabpfn_summary.webp" width="80%" alt="TabPFN Summary">
 
-⚠️ **Major Update: Version 2.0:** Complete codebase overhaul with new architecture and
-features. Previous version available at [v1.0.0](../../tree/v1.0.0) and
-`pip install tabpfn==0.1.11`.
-
-📚 For detailed usage examples and best practices, check out [Interactive Colab Tutorial](https://colab.research.google.com/github/PriorLabs/TabPFN/blob/main/examples/notebooks/TabPFN_Demo_Local.ipynb)
-
 ## 🏁 Quick Start
-
-TabPFN is a foundation model for tabular data that outperforms traditional methods while
-being dramatically faster. This repository contains the core PyTorch implementation with
-CUDA optimization.
 
 > ⚡ **GPU Recommended**:
 > For optimal performance, use a GPU (even older ones with ~8GB VRAM work well; 16GB needed for some large datasets).
 > On CPU, only small datasets (≲1000 samples) are feasible.
 > No GPU? Use our free hosted inference via [TabPFN Client](https://github.com/PriorLabs/tabpfn-client).
+
+### Notebook
+The best way to get started and run test TabPFN functionalities is via our [Interactive Colab Tutorial](https://colab.research.google.com/github/PriorLabs/TabPFN/blob/main/examples/notebooks/TabPFN_Demo_Local.ipynb)
 
 ### Installation
 Official installation (pip)
