@@ -1,0 +1,25 @@
+{
+  "feature_cols": [
+    "step",
+    "step_distance",
+    "cumulative_distance",
+    "prev_x",
+    "prev_y",
+    "knn_k",
+    "knn1_x",
+    "knn1_y",
+    "knn1_distance",
+    "knn2_x",
+    "knn2_y",
+    "knn2_distance",
+    "knn3_x",
+    "knn3_y",
+    "knn3_distance",
+    "knn4_x",
+    "knn4_y",
+    "knn4_distance",
+    "knn5_x",
+    "knn5_y",
+    "knn5_distance"
+  ]
+}
