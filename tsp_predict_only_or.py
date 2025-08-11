@@ -362,7 +362,7 @@ if __name__ == "__main__":
     greedy_len = route_length(points, greedy_route)
 
     # Solve the same instance with OR-Tools (baseline)
-    solver_route = solve_with_ortools(points, depot=START_NODE, time_limit_s=1800)
+    solver_route = solve_with_ortools(points, depot=START_NODE, time_limit_s=10)
     solver_len = route_length(points, solver_route)
 
     # Save outputs (timestamped in subfolder)
